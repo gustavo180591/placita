@@ -24,6 +24,38 @@ Este roadmap baja a tierra todo lo documentado (schema.prisma, reglas, rutas, vi
 - **Product Owner (PO)**: Prioriza backlog, define criterios de aceptación
 - **Scrum Master (SM)**: Facilita procesos ágiles, remueve impedimentos
 
+### Estructura del Proyecto
+
+#### Arquitectura General
+- **Frontend**: Aplicación SvelteKit 2 con arquitectura basada en componentes
+- **Backend**: API RESTful con NestJS
+- **Base de Datos**: PostgreSQL con Prisma ORM
+- **Sincronización**: Estrategia offline-first con cola de operaciones
+- **Despliegue**: Contenedores Docker con orquestación
+
+#### Estructura de Directorios Clave
+```
+placita/
+├── .github/            # CI/CD y plantillas
+├── docker/             # Configuraciones Docker
+├── prisma/             # Esquema y migraciones
+├── src/
+│   ├── app/            # Rutas SvelteKit
+│   ├── lib/
+│   │   ├── components/ # Componentes reutilizables
+│   │   ├── services/   # Lógica de negocio
+│   │   ├── stores/     # Estado global
+│   │   └── utils/      # Utilidades
+│   └── styles/         # Estilos globales
+└── tests/              # Pruebas automatizadas
+```
+
+#### Estándares Técnicos
+- **Código**: TypeScript estricto, ESLint, Prettier
+- **Pruebas**: 80% cobertura mínima
+- **Seguridad**: JWT, CORS estricto, headers de seguridad
+- **Monitoreo**: Métricas, logs y alertas
+
 ### Equipos Funcionales
 
 #### Frontend (FE) - 2-3 desarrolladores
