@@ -228,7 +228,7 @@ services:
     image: postgres:16-alpine
     environment:
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: tincho
+      POSTGRES_DB: placita
     ports: ["5432:5432"]
     volumes: ["pgdata:/var/lib/postgresql/data"]
 
@@ -426,7 +426,7 @@ Abrir ticket con notas (causa, fix, follow-ups)
 
 Variables de Entorno (mínimas)
 # DB & ORM
-DATABASE_URL=postgresql://postgres:postgres@localhost:5432/tincho?schema=public
+DATABASE_URL=postgresql://postgres:postgres@localhost:5432/placita?schema=public
 
 # Search
 MEILI_MASTER_KEY=changeme
