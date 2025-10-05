@@ -229,3 +229,11 @@ Logística: Ops Lead (A), Logistics (R), Integrations (R), CX (C), BI (I).
 Recomendaciones/Search: DS/ML (R), DE (C), BE (C), PO (A), SEO (I).
 
 Experimentos/Growth: GPM (A), MarTech (R), BI (C), FE (R), QA (C).
+
+Tecnologías Utilizadas:
+SvelteKit 2 (última versión estable)
+Svelte 5 (última versión estable)
+TypeScript
+Tailwind CSS 4
+Prisma (para la conexión con PostgreSQL)
+Docker (configuración básica)

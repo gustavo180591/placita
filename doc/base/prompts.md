@@ -1,0 +1,1 @@
+bien quiero que en esta carpeta @doc generes todos los documentos que se puedan generar de estos dos archivos @01 - historia.md y @placita.md usando Sveltekit 2 svelte 5 , prisma, postgresql, docker , tailwind 4
