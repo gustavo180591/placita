@@ -29,5 +29,6 @@
 - 22_integraciones_whatsapp_bancos.md — Integraciones y deeplinks
 - 23_matriz_RACI.md — RACI por módulo
 - 24_glosario.md — Términos y definiciones
+- 25_vistas_y_rutas_frontend.md — Vistas, rutas y navegación de la interfaz
 
 > Tip: Todos los archivos están pensados para iterar; los títulos usan lenguaje del negocio (e.g. “fiado”).
