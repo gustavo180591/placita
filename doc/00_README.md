@@ -1,4 +1,4 @@
-# Lo de Fabi — Documentación Funcional & Técnica (2025-10-05)
+# Placita — Documentación Funcional & Técnica (2025-10-05)
 
 **Contexto:** Mercado Modelo La Placita (Posadas, Misiones).  
 **Visión:** Sistema de Gestión POS + Inventario + Compras + Clientes (con Fiado) para puesto polirrubro.  

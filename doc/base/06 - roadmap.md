@@ -1,4 +1,4 @@
-# Roadmap de Implementación - Lo de Fabi
+# Roadmap de Implementación - Placita
 
 ## Fase 0: Preparación y Configuración Inicial
 - [ ] Configuración del entorno de desarrollo

@@ -1,7 +1,7 @@
 // -------------------------------------------------------
-// Lo de Fabi — schema.prisma (PostgreSQL + Prisma)
-// Cobertura: POS, Inventario, Compras, Clientes (Fiado),
-// Precios, Promos (estructura base), Reservas y Reportes.
+// Placita — schema.prisma (PostgreSQL + Prisma)
+// POS, Inventario, Compras, Clientes (Fiado), Precios,
+// Reservas, Reportes + Auditoría ligera con Usuario.
 // -------------------------------------------------------
 
 generator client {
@@ -11,7 +11,7 @@ generator client {
 datasource db {
   provider     = "postgresql"
   url          = env("DATABASE_URL")
-  relationMode = "foreignKeys" // Enable real foreign key constraints for onDelete/onUpdate
+  relationMode = "foreignKeys"
 }
 
 /// Utilidades: timestamps ISO, ids UUID v4, dinero Decimal(14,2)
@@ -35,9 +35,9 @@ enum UnidadMedida {
 }
 
 enum EstadoVenta {
-  ABIERTA // creada, editable mientras se arma el ticket
-  CERRADA // guardada/finalizada
-  ANULADA // revertida total (opcional)
+  ABIERTA
+  CERRADA
+  ANULADA
 }
 
 enum EstadoPago {
@@ -48,7 +48,7 @@ enum EstadoPago {
 
 enum MedioPago {
   EFECTIVO
-  QR // QR / transferencia
+  QR
   FIADO
 }
 
@@ -85,9 +85,20 @@ model Usuario {
   telefono String?    @db.VarChar(40)
   rol      RolUsuario @default(OPERADOR)
 
-  // Auth mínima (si se usa):
+  // Auth mínima (si se usa)
   email String? @unique
-  hash  String? // password hash (opcional si hay otro proveedor de auth)
+  hash  String?
+
+  // Relaciones inversas (auditoría/propiedad)
+  ventasRegistradas     Venta[]
+  comprasRegistradas    Compra[]
+  ajustesRegistrados    AjusteStock[]
+  reservasRegistradas   Reserva[]
+  productosCreados      Producto[]
+  productosPropietarios Producto[]    @relation("ProductoOwner")
+  preciosCreados        Precio[]
+  clientesCreados       Cliente[]
+  clientesPropietarios  Cliente[]     @relation("ClienteOwner")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -101,29 +112,36 @@ model Producto {
   categoria   String
   nombre      String
   descripcion String?
-  variante    String? // talle/color u otro
+  variante    String?
   fotoUrl     String?
   estado      EstadoProducto @default(ACTIVO)
 
-  // Stock en unidades individuales
+  // Stock
   stockActual  Int          @default(0)
   stockMinimo  Int          @default(0)
   unidadMedida UnidadMedida @default(UNIDAD)
   ubicacion    String?
 
-  // Costeo preferente (último costo conocido a ARS)
+  // Costeo preferente
   costoUnitarioARS Decimal? @db.Decimal(14, 2)
 
-  // Precios actuales de referencia (puede haber histórico en Precio)
+  // Precios vigentes (histórico en Precio)
   precioListaARS  Decimal?  @db.Decimal(14, 2)
   precioOfertaARS Decimal?  @db.Decimal(14, 2)
   ofertaDesde     DateTime?
   ofertaHasta     DateTime?
-  // Ajuste por medio de pago (ej. recargo QR): porcentaje 0.00–1.00 (10% = 0.10)
   listaQrPct      Decimal?  @db.Decimal(6, 4)
 
+  // Proveedor referencial
   proveedorPrincipalId String?
   proveedorPrincipal   Proveedor? @relation(fields: [proveedorPrincipalId], references: [id], onDelete: SetNull)
+
+  // Auditoría / Propiedad
+  creadoPorId String?
+  creadoPor   Usuario? @relation(fields: [creadoPorId], references: [id], onDelete: SetNull)
+
+  ownerId String?
+  owner   Usuario? @relation("ProductoOwner", fields: [ownerId], references: [id], onDelete: SetNull)
 
   precios      Precio[]
   compraItems  CompraItem[]
@@ -137,9 +155,11 @@ model Producto {
   @@index([categoria])
   @@index([nombre])
   @@index([estado])
+  @@index([creadoPorId])
+  @@index([ownerId])
 }
 
-/// Historial de precios (versionado opcional)
+/// Historial/versionado de precios
 model Precio {
   id         String   @id @default(uuid())
   productoId String
@@ -149,11 +169,16 @@ model Precio {
   ofertaARS     Decimal?  @db.Decimal(14, 2)
   vigenciaDesde DateTime  @default(now())
   vigenciaHasta DateTime?
-  listaQrPct    Decimal?  @db.Decimal(6, 4) // ej. 0.10 = +10% QR
+  listaQrPct    Decimal?  @db.Decimal(6, 4)
+
+  // Auditoría
+  creadoPorId String?
+  creadoPor   Usuario? @relation(fields: [creadoPorId], references: [id], onDelete: SetNull)
 
   createdAt DateTime @default(now())
 
   @@index([productoId, vigenciaDesde])
+  @@index([creadoPorId])
 }
 
 /// ----------------------
@@ -162,10 +187,10 @@ model Precio {
 model Proveedor {
   id              String  @id @default(uuid())
   nombre          String
-  contacto        String? // WhatsApp/teléfono
+  contacto        String?
   condicionesPago String?
   notas           String?
-  origen          String? // local / Encarnación / viajante
+  origen          String?
 
   compras   Compra[]
   productos Producto[]
@@ -183,12 +208,16 @@ model Compra {
   proveedor   Proveedor @relation(fields: [proveedorId], references: [id], onDelete: Restrict)
 
   costoTotalARS  Decimal   @db.Decimal(14, 2)
-  gastosARS      Decimal?  @db.Decimal(14, 2) // flete, aranceles prorrateables si se desea
-  tipoCambio     Decimal?  @db.Decimal(14, 4) // cuando se compró en USD/Gs y se convierte a ARS
-  metodoPago     MedioPago // generalmente EFECTIVO o QR
+  gastosARS      Decimal?  @db.Decimal(14, 2)
+  tipoCambio     Decimal?  @db.Decimal(14, 4)
+  metodoPago     MedioPago
   comprobanteRef String?
-  adjuntoUrl     String? // foto/scan de remito/factura
+  adjuntoUrl     String?
   notas          String?
+
+  // Auditoría
+  registradoPorId String?
+  registradoPor   Usuario? @relation(fields: [registradoPorId], references: [id], onDelete: SetNull)
 
   items CompraItem[]
 
@@ -197,6 +226,7 @@ model Compra {
 
   @@index([fecha])
   @@index([proveedorId, fecha])
+  @@index([registradoPorId])
 }
 
 model CompraItem {
@@ -209,7 +239,7 @@ model CompraItem {
 
   cantidad      Int
   costoUnitario Decimal @db.Decimal(14, 2)
-  moneda        Moneda // ARS, USD, Gs
+  moneda        Moneda
   subtotal      Decimal @db.Decimal(14, 2)
 
   @@index([compraId])
@@ -223,19 +253,28 @@ model Cliente {
   id          String   @id @default(uuid())
   nombre      String
   telefono    String?  @db.VarChar(40)
-  tipo        String? // minorista/mayorista (texto libre)
+  tipo        String?
   notas       String?
   limiteFiado Decimal? @db.Decimal(14, 2)
 
-  ventas Venta[]
-  deudas DeudaCliente?
+  // Auditoría / Propiedad
+  creadoPorId String?
+  creadoPor   Usuario? @relation(fields: [creadoPorId], references: [id], onDelete: SetNull)
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  Reserva   Reserva[]
+  ownerId String?
+  owner   Usuario? @relation("ClienteOwner", fields: [ownerId], references: [id], onDelete: SetNull)
+
+  ventas  Venta[]
+  deudas  DeudaCliente?
+  Reserva Reserva[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([nombre])
   @@index([telefono])
+  @@index([creadoPorId])
+  @@index([ownerId])
 }
 
 model DeudaCliente {
@@ -260,11 +299,15 @@ model Venta {
   clienteId String?
   cliente   Cliente? @relation(fields: [clienteId], references: [id], onDelete: SetNull)
 
+  // Auditoría
+  registradoPorId String?
+  registradoPor   Usuario? @relation(fields: [registradoPorId], references: [id], onDelete: SetNull)
+
   estado        EstadoVenta @default(CERRADA)
   estadoPago    EstadoPago  @default(PENDIENTE)
   observaciones String?
 
-  total Decimal @db.Decimal(14, 2) // total venta (bruto menos descuentos)
+  total Decimal @db.Decimal(14, 2)
 
   items VentaItem[]
   pagos VentaPago[]
@@ -275,6 +318,7 @@ model Venta {
   @@index([fecha])
   @@index([clienteId])
   @@index([estadoPago])
+  @@index([registradoPorId])
 }
 
 model VentaItem {
@@ -286,12 +330,12 @@ model VentaItem {
   producto   Producto @relation(fields: [productoId], references: [id], onDelete: Restrict)
 
   cantidad   Int
-  precioUnit Decimal  @db.Decimal(14, 2) // ya con promo/redondeo aplicado
-  descuento  Decimal? @db.Decimal(14, 2) // descuento puntual de línea
+  precioUnit Decimal  @db.Decimal(14, 2)
+  descuento  Decimal? @db.Decimal(14, 2)
   subtotal   Decimal  @db.Decimal(14, 2)
 
   esCombo  Boolean @default(false)
-  override Boolean @default(false) // si se editó manualmente el precio
+  override Boolean @default(false)
 
   @@index([ventaId])
   @@index([productoId])
@@ -304,8 +348,8 @@ model VentaPago {
 
   tipo       MedioPago
   monto      Decimal   @db.Decimal(14, 2)
-  referencia String? // ej. últimos 4 dígitos o id de transacción
-  confirmado Boolean   @default(true) // QR puede quedar false hasta conciliar
+  referencia String?
+  confirmado Boolean   @default(true)
   createdAt  DateTime  @default(now())
 
   @@index([ventaId])
@@ -322,11 +366,13 @@ model Reserva {
   clienteId String?
   cliente   Cliente? @relation(fields: [clienteId], references: [id], onDelete: SetNull)
 
+  // Auditoría
+  registradoPorId String?
+  registradoPor   Usuario? @relation(fields: [registradoPorId], references: [id], onDelete: SetNull)
+
   estado        EstadoReserva @default(ABIERTA)
   observaciones String?
-
-  // Seña/pago parcial (opcional) asociado a la reserva
-  seniaARS Decimal? @db.Decimal(14, 2)
+  seniaARS      Decimal?      @db.Decimal(14, 2)
 
   items ReservaItem[]
 
@@ -335,6 +381,7 @@ model Reserva {
 
   @@index([clienteId])
   @@index([estado])
+  @@index([registradoPorId])
 }
 
 model ReservaItem {
@@ -359,10 +406,15 @@ model AjusteStock {
   productoId String
   producto   Producto @relation(fields: [productoId], references: [id], onDelete: Restrict)
 
+  // Auditoría
+  registradoPorId String?
+  registradoPor   Usuario? @relation(fields: [registradoPorId], references: [id], onDelete: SetNull)
+
   tipo     TipoAjusteStock
-  cantidad Int // positivo/negativo según caso
+  cantidad Int
   motivo   String?
   fecha    DateTime        @default(now())
 
   @@index([productoId, fecha])
+  @@index([registradoPorId])
 }

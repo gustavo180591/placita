@@ -1,5 +1,5 @@
 // -------------------------------------------------------
-// Lo de Fabi — schema.prisma (PostgreSQL + Prisma)
+// Placita — schema.prisma (PostgreSQL + Prisma)
 // Cobertura: POS, Inventario, Compras, Clientes (Fiado),
 // Precios, Promos (estructura base), Reservas y Reportes.
 // -------------------------------------------------------

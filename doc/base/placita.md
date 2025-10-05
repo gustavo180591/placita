@@ -1,4 +1,4 @@
-¡Perfecto, Gustavo! Como empresa de software experta en e-commerce para el proyecto “Lo de Fabi”, te dejo el equipo completo —sin olvidarme de nadie— con título, cómo se lo nombra/alias y tareas clave. Directo al grano y listo para armar.
+¡Perfecto, Gustavo! Como empresa de software experta en e-commerce para el proyecto “Placita”, te dejo el equipo completo —sin olvidarme de nadie— con título, cómo se lo nombra/alias y tareas clave. Directo al grano y listo para armar.
 
 Dirección y Gobierno
 

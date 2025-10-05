@@ -1,4 +1,4 @@
-# Visión y Objetivos — Lo de Fabi
+# Visión y Objetivos — Placita
 
 ## Visión
 Un **POS móvil, rápido y offline-first** que **no interfiere** con la atención al cliente, con núcleo de **ventas + stock + fiado**, y reportes simples que permiten **reponer a tiempo** y **cobrar sin olvidos**.
