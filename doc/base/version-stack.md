@@ -1,10 +1,10 @@
-# Stack Tecnológico - Librería Arco Iris
+# Stack Tecnológico - Placita
 
-Este documento detalla la pila tecnológica actual del sistema de gestión para Librería Arco Iris, incluyendo versiones y comandos de instalación.
+Este documento detalla la pila tecnológica actual del sistema de gestión para Placita, incluyendo versiones y comandos de instalación.
 
 ## Visión General
 
-Sistema de gestión integral para Librería Arco Iris, una tienda online especializada en artículos de librería, libros y útiles escolares con control de stock en tiempo real.
+Sistema de gestión integral para Placita, una tienda online especializada en artículos de librería, libros y útiles escolares con control de stock en tiempo real.
 
 ## Entorno de Desarrollo
 

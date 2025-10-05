@@ -1,5 +1,6 @@
 # Roadmap Extendido — placita
 **Fecha:** 2025-10-05
+**Versión:** 1.1.0
 
 Este roadmap baja a tierra todo lo documentado (schema.prisma, reglas, rutas, vistas, offline, seguridad) y lo organiza en **fases, sprints**, con **DOR/DOD**, **criterios de aceptación**, **dependencias**, **riesgos** y **métricas** claras.
 
@@ -8,48 +9,143 @@ Este roadmap baja a tierra todo lo documentado (schema.prisma, reglas, rutas, vi
 ---
 
 ## Visión de Alto Nivel (Hitos)
-- **H1 — MVP operativo en feria**: POS rápido, productos, clientes+fiado, compras básicas, reportes esenciales, offline real, exportación.
-- **H2 — Eficiencia y rentabilidad**: promos/cobos, múltiples precios por medio, reportes avanzados, conciliación QR, arqueo.
-- **H3 — Escala y calidad**: performance, UX avanzada, seguridad, backups, observabilidad.
-- **H4 — Expansión**: integraciones (WhatsApp/pagos), analítica, planificación compras, multi-sucursal.
+- [ ] **H1 — MVP operativo en feria**: POS rápido, productos, clientes+fiado, compras básicas, reportes esenciales, offline real, exportación.
+- [ ] **H2 — Eficiencia y rentabilidad**: promos/cobos, múltiples precios por medio, reportes avanzados, conciliación QR, arqueo.
+- [ ] **H3 — Escala y calidad**: performance, UX avanzada, seguridad, backups, observabilidad.
+- [ ] **H4 — Expansión**: integraciones (WhatsApp/pagos), analítica, planificación compras, multi-sucursal.
 
 ---
 
-## Estructura de Trabajo por Tracks
-- **FE** (Frontend web móvil / PWA).
-- **BE** (API + Prisma + lógica de dominio).
-- **SYNC** (offline, colas, reconciliación).
-- **DATA** (migraciones, semillas, export/import).
-- **QA** (tests unitarios, integración, E2E, UAT).
-- **DEVOPS** (CI/CD, Docker, entornos, observabilidad).
-- **SEC** (seguridad, cumplimiento, cifrado).
+## Equipo y Responsabilidades
+
+### Liderazgo Técnico
+- **Arquitecto de Soluciones (SA)**: Define arquitectura técnica, patrones y estándares
+- **Tech Lead (TL)**: Lidera implementación, revisiones de código, mentoría
+- **Product Owner (PO)**: Prioriza backlog, define criterios de aceptación
+- **Scrum Master (SM)**: Facilita procesos ágiles, remueve impedimentos
+
+### Equipos Funcionales
+
+#### Frontend (FE) - 2-3 desarrolladores
+- **Tecnologías**: SvelteKit 2, TypeScript, Tailwind CSS 4
+- **Responsabilidades**:
+  - UI/UX responsiva móvil-first
+  - Estado de la aplicación
+  - Integración con APIs
+  - Optimización de rendimiento
+
+#### Backend (BE) - 2-3 desarrolladores
+- **Tecnologías**: Node.js, NestJS, Prisma, PostgreSQL
+- **Responsabilidades**:
+  - API RESTful
+  - Lógica de negocio
+  - Modelo de datos
+  - Integraciones
+
+#### DevOps - 1-2 ingenieros
+- **Tecnologías**: Docker, GitHub Actions, AWS/GCP
+- **Responsabilidades**:
+  - CI/CD
+  - Infraestructura como código
+  - Monitoreo y alertas
+  - Despliegues
+
+#### QA - 1-2 ingenieros
+- **Tecnologías**: Playwright, Jest, Postman
+- **Responsabilidades**:
+  - Automatización de pruebas
+  - Pruebas de rendimiento
+  - Aseguramiento de calidad
+  - Documentación de pruebas
 
 ---
 
 ## Fase 0 — Preparación y Configuración (1 semana)
 **Objetivo:** Base estable de proyecto, CI/CD y docs vivas.
 
+**Líder Técnico:** [Nombre del TL]
+**Scrum Master:** [Nombre del SM]
+**Product Owner:** [Nombre del PO]
+
 ### Entregables
-- Repos mono-repo (packages: fe, be, infra).
-- CI/CD: lint, typecheck, unit tests, pr checks.
-- Entornos: dev, stage, prod (Docker Compose).
-- Documentación base:
-  - `25_vistas_y_rutas_frontend.md` (hecho)
-  - `26_routes_frontend.md` (hecho)
-  - `27_rules.md` (hecho)
-  - `schema.prisma` (hecho)
+- [ ] **Repositorio**
+  - [ ] Estructura mono-repo con pnpm workspaces
+  - [ ] Configuración de husky + commitlint + commitizen
+  - [ ] Plantillas de PR y issues
 
-### Tareas clave
-- FE: bootstrap (SvelteKit/React), routing, layouts (public/private).
-- BE: Nest/Fastify/Express + PrismaClient; seeds mínimas.
-- DEVOPS: pipelines, imágenes Docker, variables .env, volúmenes persistentes.
-- QA: plantilla de test, utilidades de datos fake.
-- SEC: política de secretos (.env), rotación local.
+- [ ] **CI/CD**
+  - [ ] GitHub Actions para build/test/lint
+  - [ ] Despliegue automático a entornos
+  - [ ] Monitoreo básico con Prometheus/Grafana
 
-**DOD (Definition of Done)**
-- Pipeline verde (build+lints+tests).
-- Deploy local con `docker compose up -d`.
-- Docs publicadas en repo `/docs`.
+- [ ] **Entornos**
+  - [ ] Docker Compose para desarrollo local
+  - [ ] Configuración de staging y producción
+  - [ ] Variables de entorno por entorno
+
+- [ ] **Documentación**
+  - [x] `25_vistas_y_rutas_frontend.md` (FE)
+  - [x] `26_routes_frontend.md` (FE/BE)
+  - [x] `27_rules.md` (TL/PO)
+  - [x] `schema.prisma` (BE)
+  - [ ] Guía de contribución
+  - [ ] Estándares de código
+
+### Plan de Implementación
+
+#### Frontend (FE)
+- [ ] Setup SvelteKit 2 con TypeScript
+  - [ ] Configuración de ESLint/Prettier
+  - [ ] Estructura de carpetas
+  - [ ] Sistema de diseño con Tailwind
+  - [ ] Manejo de rutas y layouts
+
+#### Backend (BE)
+- [ ] API Base con NestJS
+  - [ ] Módulo de autenticación
+  - [ ] Configuración de Prisma
+  - [ ] Validación de datos con class-validator
+  - [ ] Documentación con Swagger
+
+#### DevOps
+- [ ] Infraestructura como Código
+  - [ ] Dockerfiles para cada servicio
+  - [ ] docker-compose.yml para desarrollo
+  - [ ] Scripts de despliegue
+
+#### QA
+- [ ] Configuración de pruebas
+  - [ ] Unit tests con Jest
+  - [ ] E2E con Playwright
+  - [ ] Pruebas de carga con k6
+
+#### Seguridad
+- [ ] Hardening de la aplicación
+  - [ ] Política de CORS
+  - [ ] Headers de seguridad
+  - [ ] Rate limiting
+  - [ ] Rotación de secretos
+
+## Criterios de Aceptación (DOD)
+
+### Para cada tarea:
+- [ ] Código revisado por al menos un par
+- [ ] Pruebas unitarias pasando (>80% cobertura)
+- [ ] Pruebas de integración pasando
+- [ ] Documentación actualizada
+- [ ] Cumple con estándares de código
+
+### Para cada sprint:
+- [ ] Demo funcional al equipo
+- [ ] Retrospectiva realizada
+- [ ] Métricas de calidad cumplidas
+- [ ] Documentación actualizada
+
+### Para cada release:
+- [ ] Pruebas de regresión completadas
+- [ ] Documentación de usuario actualizada
+- [ ] Plan de rollback probado
+- [ ] Monitoreo en producción configurado
 
 ---
 
@@ -57,40 +153,222 @@ Este roadmap baja a tierra todo lo documentado (schema.prisma, reglas, rutas, vi
 **Objetivo:** Operar ventas reales en feria, sin fricción.
 
 ### Sprint 1 (Semana 1–2): Autenticación + Catálogo + POS básico
-- FE: login (email/clave), guard, home, POS (búsqueda, agregar ítems, total).
-- BE: endpoints productos, ventas, clientes.
-- DATA: semillas top SKUs, 10 clientes fiado.
-- QA: tests unitarios precio línea (PRC-CAL-001), validaciones venta vacía (POS-VLD-002).
-- SEC: hashing passwords, rate limit login.
 
-**Criterios de aceptación**
-- Crear venta con efectivo (sin fiado) ≤10s.
-- Búsqueda de producto <200ms con 500 SKUs.
+**Objetivo:** Sistema de autenticación funcional y POS básico operativo
+
+#### Equipo Asignado
+- **TL**: Supervisión técnica
+- **FE**: 2 desarrolladores
+- **BE**: 2 desarrolladores
+- **QA**: 1 ingeniero
+- **SEC**: Consultoría (20%)
+
+#### Tareas Detalladas
+
+**Frontend (FE)**
+- [ ] **Autenticación**
+  - [ ] Pantalla de login/registro
+  - [ ] Guard de rutas protegidas
+  - [ ] Manejo de sesión y tokens
+- [ ] **POS Básico**
+  - [ ] Búsqueda de productos
+  - [ ] Carrito de compras
+  - [ ] Cálculo de totales
+  - [ ] Interfaz táctil optimizada
+
+**Backend (BE)**
+- [ ] **Autenticación**
+  - [ ] Endpoints de registro/login
+  - [ ] Middleware de autenticación
+  - [ ] Renovación de tokens
+- [ ] **Catálogo**
+  - [ ] CRUD de productos
+  - [ ] Búsqueda y filtrado
+  - [ ] Gestión de inventario
+
+**Base de Datos (DATA)**
+- [ ] Esquema inicial
+- [ ] Datos de prueba
+  - [ ] 100 productos de ejemplo
+  - [ ] 10 clientes con histórico
+  - [ ] Categorías y variantes
+
+**Calidad (QA)**
+- [ ] Pruebas unitarias (80% cobertura)
+- [ ] Pruebas de integración
+- [ ] Pruebas de rendimiento
+
+**Seguridad (SEC)**
+- [ ] Hashing de contraseñas (bcrypt)
+- [ ] Rate limiting
+- [ ] Headers de seguridad
+
+#### Métricas de Éxito
+- Tiempo de respuesta de búsqueda < 200ms
+- Autenticación en < 2s
+- Cobertura de pruebas > 80%
+- Sin vulnerabilidades críticas
+
+**Criterios de Aceptación**
+- [ ] Crear venta con efectivo en ≤10s
+- [ ] Búsqueda de producto <200ms con 500 SKUs
+- [ ] Autenticación segura con JWT
+- [ ] Interfaz usable en móviles
 
 ### Sprint 2 (Semana 3–4): Pagos múltiples + Fiado + Clientes
-- FE: selección de medio (efectivo/QR/fiado), detalle cliente, registrar pago parcial fiado.
-- BE: saldo deudor en `DeudaCliente`, endpoints pagos.
-- SYNC: cola offline para ventas y pagos (append-only).
-- QA: UAT fiado (FIA-RUL-001/002), errores claros (`FIA-LIM-001`).
 
-**Criterios de aceptación**
-- Venta con fiado afecta saldo.
-- Modo offline permite vender; al reconectar sincroniza sin duplicar (SYNC-MER-004).
+**Objetivo:** Sistema de pagos flexible con soporte offline
+
+#### Equipo Asignado
+- **TL**: Supervisión técnica
+- **FE**: 2 desarrolladores
+- **BE**: 2 desarrolladores
+- **SYNC**: 1 desarrollador
+- **QA**: 1 ingeniero
+- **SEC**: Consultoría (10%)
+
+#### Tareas Detalladas
+
+**Frontend (FE)**
+- [ ] **Gestión de Clientes**
+  - [ ] Búsqueda y selección de clientes
+  - [ ] Perfil de cliente con historial
+  - [ ] Límites de crédito
+- [ ] **Sistema de Pagos**
+  - [ ] Selección múltiple de medios de pago
+  - [ ] Cálculo de cambio
+  - [ ] Comprobantes digitales
+- [ ] **Offline Mode**
+  - [ ] Indicador de estado de conexión
+  - [ ] Cola de operaciones pendientes
+
+**Backend (BE)**
+- [ ] **Módulo de Pagos**
+  - [ ] Endpoints para procesar pagos
+  - [ ] Cálculo de comisiones
+  - [ ] Integración con pasarelas
+- [ ] **Gestión de Fiados**
+  - [ ] Modelo de deudas
+  - [ ] Historial de pagos
+  - [ ] Notificaciones de vencimiento
+
+**Sincronización (SYNC)**
+- [ ] **Offline First**
+  - [ ] Cola de operaciones
+  - [ ] Resolución de conflictos
+  - [ ] Sincronización bidireccional
+- [ ] **Performance**
+  - [ ] Indexado para búsquedas rápidas
+  - [ ] Caché de datos frecuentes
+
+**Calidad (QA)**
+- [ ] Pruebas de flujo de pago
+- [ ] Pruebas de sincronización
+- [ ] Pruebas de carga
+
+**Seguridad (SEC)**
+- [ ] Validación de pagos
+- [ ] Cifrado de datos sensibles
+
+#### Métricas de Éxito
+- Tiempo de procesamiento de pago < 3s
+- Sincronización en < 5s
+- < 0.1% de conflictos no resueltos
+- 100% de operaciones offline recuperadas
+
+**Criterios de Aceptación**
+- [ ] Venta con fiado actualiza saldo en tiempo real
+- [ ] Sistema opera sin conexión por hasta 4 horas
+- [ ] Sincronización automática al recuperar conexión
+- [ ] Sin pérdida de datos en modo offline
 
 ### Sprint 3 (Semana 5–6): Compras + Reportes esenciales + Cierre de caja
-- FE: ABM compras, foto de remito, reportes (ventas del día, stock mínimo, fiado).
-- BE: costo promedio móvil (CMP-CAL-001), alertas stock crítico.
-- QA: E2E venta→reporte día; compra actualiza stock/costo.
-- DEVOPS: backup volumen DB (cron) y restauración.
 
-**Criterios de aceptación**
-- Reporte ventas del día consistente.
-- Cierre de caja con desglose por medio de pago.
+**Objetivo:** Gestión completa de inventario y reportes operativos
+
+#### Equipo Asignado
+- **TL**: Supervisión técnica y resolución de bloqueos
+- **FE**: 2 desarrolladores
+- **BE**: 2 desarrolladores
+- **DATA**: 1 ingeniero
+- **QA**: 1 ingeniero
+- **DEVOPS**: 1 ingeniero
+
+#### Tareas Detalladas
+
+**Frontend (FE)**
+- [ ] **Gestión de Compras**
+  - [ ] ABM de órdenes de compra
+  - [ ] Carga de remitos con cámara
+  - [ ] Validación de datos de entrada
+  - [ ] Historial de compras con filtros
+- [ ] **Reportes**
+  - [ ] Panel de reportes esenciales
+  - [ ] Exportación a PDF/CSV
+  - [ ] Filtros por fecha y vendedor
+  - [ ] Gráficos de tendencias
+- [ ] **Cierre de Caja**
+  - [ ] Resumen diario de ventas
+  - [ ] Desglose por medio de pago
+  - [ ] Conciliación con efectivo físico
+
+**Backend (BE)**
+- [ ] **Módulo de Compras**
+  - [ ] Endpoints para gestión de compras
+  - [ ] Cálculo de costo promedio móvil (CMP-CAL-001)
+  - [ ] Actualización de stock automática
+  - [ ] Historial de movimientos
+- [ ] **Reportes**
+  - [ ] Generación de reportes en tiempo real
+  - [ ] Cálculo de métricas clave
+  - [ ] API para filtros avanzados
+- [ ] **Seguridad**
+  - [ ] Validación de permisos
+  - [ ] Auditoría de operaciones
+
+**Base de Datos (DATA)**
+- [ ] **Modelo de Datos**
+  - [ ] Optimización de consultas
+  - [ ] Índices para reportes
+  - [ ] Datos de prueba realistas
+- [ ] **Rendimiento**
+  - [ ] Monitoreo de consultas lentas
+  - [ ] Optimización de índices
+
+**DevOps**
+- [ ] **Backups**
+  - [ ] Configuración de backup automático
+  - [ ] Scripts de restauración
+  - [ ] Monitoreo de espacio
+- [ ] **Monitoreo**
+  - [ ] Alertas de espacio en disco
+  - [ ] Métricas de rendimiento
+
+**Calidad (QA)**
+- [ ] **Pruebas**
+  - [ ] E2E flujo completo compra→stock
+  - [ ] Validación de reportes
+  - [ ] Pruebas de rendimiento
+  - [ ] Pruebas de usabilidad
+
+#### Métricas de Éxito
+- Generación de reportes < 3s
+- 100% de trazabilidad compra→stock
+- 0% de pérdida de datos en backups
+- < 1% de discrepancias en cierre de caja
+
+**Criterios de Aceptación**
+- [ ] Reporte de ventas del día con totales correctos
+- [ ] Cierre de caja con desglose por medio de pago
+- [ ] Actualización en tiempo real de stock al cargar compras
+- [ ] Backups diarios verificables
+- [ ] Exportación a CSV/PDF sin errores
 
 **DOD Fase 1**
-- Manual rápido de uso (PDF).
-- Exportación CSV de ventas y clientes.
-- UAT en dispositivo gama media sin errores críticos.
+- [ ] Manual rápido de uso (PDF)
+- [ ] Exportación CSV de ventas y clientes funcional
+- [ ] UAT exitoso en dispositivo gama media
+- [ ] Documentación técnica actualizada
 
 ---
 
