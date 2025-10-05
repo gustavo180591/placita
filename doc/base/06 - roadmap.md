@@ -5,6 +5,7 @@
   - [ ] Configuración de repositorio de código
   - [ ] Configuración de entornos (desarrollo, pruebas, producción)
   - [ ] Establecer pipeline de CI/CD básico
+  - [ ] Documentación de rutas frontend (vistas y navegación)
 
 ## Fase 1: MVP (Mínimo Producto Viable) - 4-6 semanas
 ### Núcleo del Sistema
