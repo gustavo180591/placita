@@ -394,6 +394,74 @@ Resumen de 7 puntos clave mencionados por el entrevistado:
 
 Control de stock en tiempo real con alertas de faltantes, para no perder ventas por olvido de reponer.
 
+## Estructura de Módulos de E-commerce
+
+Basado en las necesidades del negocio y las mejores prácticas de comercio electrónico, se ha definido la siguiente estructura modular para el sistema:
+
+### Núcleo (imprescindibles para el MVP)
+
+1. **Home/Landing**
+   - Presentación de la tienda y ofertas destacadas
+   - Acceso rápido a categorías principales
+
+2. **Catálogo/Listados**
+   - Visualización por categorías
+   - Filtros y ordenamiento de productos
+   - Búsqueda con sugerencias
+
+3. **Ficha de Producto**
+   - Galería de imágenes
+   - Variantes (tallas, colores)
+   - Descripción detallada
+   - Reseñas de clientes
+
+4. **Carrito de Compras**
+   - Mini-carrito
+   - Página completa de carrito
+   - Gestión de cantidades
+
+5. **Checkout**
+   - Datos del cliente
+   - Opciones de envío
+   - Métodos de pago
+   - Resumen del pedido
+
+6. **Gestión de Usuarios**
+   - Registro/Login
+   - Perfil de usuario
+   - Direcciones de envío
+   - Historial de pedidos
+
+7. **Panel de Administración**
+   - Gestión de productos
+   - Control de inventario
+   - Reportes básicos
+   - Configuración de la tienda
+
+### Módulos Adicionales (Segunda Fase)
+
+1. **Sistema de Promociones**
+   - Cupones de descuento
+   - Ofertas por tiempo limitado
+   - Descuentos por volumen
+
+2. **Sistema de Fidelización**
+   - Puntos por compras
+   - Niveles de cliente
+   - Beneficios exclusivos
+
+3. **Integración con Redes Sociales**
+   - Compartir productos
+   - Login con redes sociales
+   - Comentarios y valoraciones
+
+4. **Análisis Avanzado**
+   - Reportes de ventas
+   - Comportamiento de usuarios
+   - Métricas de conversión
+
+Esta estructura modular permitirá escalar el sistema de manera ordenada, priorizando las funcionalidades críticas para el negocio de Juan en La Placita, mientras se mantiene la flexibilidad para futuras expansiones.
+
 Registro de ventas fácil y rápido, incluyendo distintos medios de cobro y posibilidad de fiar a clientes, con seguimiento de deudas.
 
 Manejo de precios dinámico, con márgenes por categoría, opción de promociones por cantidad y diferenciación efectivo/QR, asegurando mantener rentabilidad pese a la inflación.
