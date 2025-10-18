@@ -17,6 +17,8 @@
     { label: 'Nueva Venta', icon: '💰', path: '/pos', auth: true },
     { label: 'Ver Productos', icon: '📦', path: '/productos', auth: true },
     { label: 'Clientes', icon: '👥', path: '/clientes', auth: true },
+    { label: 'Catálogo Online', icon: '🛍️', path: '/productos', auth: false },
+    { label: 'Mi Carrito', icon: '🛒', path: '/carrito', auth: false },
     { label: 'Iniciar Sesión', icon: '🔑', path: '/login', auth: false }
   ];
 </script>
@@ -56,9 +58,9 @@
             description: 'Procesa transacciones en segundos con nuestro POS intuitivo.'
           },
           {
-            icon: '📊',
-            title: 'Control Total',
-            description: 'Gestiona inventario, precios y promociones desde un solo lugar.'
+            icon: '🛒',
+            title: 'Carrito Inteligente',
+            description: 'Agrega productos fácilmente y gestiona tu carrito de compras online.'
           },
           {
             icon: '📱',

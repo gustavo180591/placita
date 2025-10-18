@@ -197,11 +197,10 @@ placita/
 
 #### Tareas Detalladas
 
-**Frontend (FE)**
-- [ ] **Autenticación**
-  - [ ] Pantalla de login/registro
-  - [ ] Guard de rutas protegidas
-  - [ ] Manejo de sesión y tokens
+- [x] **Autenticación**
+  - [x] Pantalla de login/registro
+  - [x] Guard de rutas protegidas
+  - [x] Manejo de sesión y tokens
 - [ ] **POS Básico**
   - [ ] Búsqueda de productos
   - [ ] Carrito de compras
@@ -209,10 +208,10 @@ placita/
   - [ ] Interfaz táctil optimizada
 
 **Backend (BE)**
-- [ ] **Autenticación**
-  - [ ] Endpoints de registro/login
-  - [ ] Middleware de autenticación
-  - [ ] Renovación de tokens
+- [x] **Autenticación**
+  - [x] Endpoints de registro/login
+  - [x] Middleware de autenticación
+  - [x] Renovación de tokens
 - [ ] **Catálogo**
   - [ ] CRUD de productos
   - [ ] Búsqueda y filtrado
